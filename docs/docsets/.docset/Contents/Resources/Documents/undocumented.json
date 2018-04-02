@@ -1,0 +1,54 @@
+{
+  "warnings": [
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 110,
+      "symbol": "Auth.Scope.readPublic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 111,
+      "symbol": "Auth.Scope.writePublic",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 112,
+      "symbol": "Auth.Scope.readRelationships",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 113,
+      "symbol": "Auth.Scope.writeRelationships",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 115,
+      "symbol": "Auth.Scope.all",
+      "symbol_kind": "source.lang.swift.decl.var.static",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 122,
+      "symbol": "Auth.Result.success",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    },
+    {
+      "file": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth/Sources/Auth.swift",
+      "line": 123,
+      "symbol": "Auth.Result.failure",
+      "symbol_kind": "source.lang.swift.decl.enumelement",
+      "warning": "undocumented"
+    }
+  ],
+  "source_directory": "/Users/n/Dropbox/Development/Xcode/Codebase/PinterestAuth"
+}

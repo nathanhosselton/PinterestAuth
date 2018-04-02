@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>  Reference</title>
+    <link rel="stylesheet" type="text/css" href="css/jazzy.css" />
+    <link rel="stylesheet" type="text/css" href="css/highlight.css" />
+    <meta charset='utf-8'>
+    <script src="js/jquery.min.js" defer></script>
+    <script src="js/jazzy.js" defer></script>
+    
+  </head>
+  <body>
+    <a title="  Reference"></a>
+    <header>
+      <div class="content-wrapper">
+        <p><a href="index.html"> Docs</a> (100% documented)</p>
+      </div>
+    </header>
+    <div class="content-wrapper">
+      <p id="breadcrumbs">
+        <a href="index.html"> Reference</a>
+        <img id="carat" src="img/carat.png" />
+          Reference
+      </p>
+    </div>
+    <div class="content-wrapper">
+      <nav class="sidebar">
+        <ul class="nav-groups">
+          <li class="nav-group-name">
+            <a href="Enums.html">Enumerations</a>
+            <ul class="nav-group-tasks">
+              <li class="nav-group-task">
+                <a href="Enums/Auth.html">Auth</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Auth/Error.html">– Error</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Auth/Scope.html">– Scope</a>
+              </li>
+              <li class="nav-group-task">
+                <a href="Enums/Auth/Result.html">– Result</a>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+      <article class="main-content">
+        <section>
+          <section class="section">
+            
+            <h1 id='pinterestauth' class='heading'>PinterestAuth</h1>
+
+<p>The complete documentation for the public APIs of the <code>PinterestAuth</code> framework which wraps Pinterest.com&rsquo;s Oauth2 authentication process.</p>
+<h1 id='getting-started' class='heading'>Getting Started</h1>
+
+<p>Include the library in your <code>Podfile</code> like so:</p>
+<pre class="highlight ruby"><code><span class="n">pod</span> <span class="s1">'PinterestAuth'</span><span class="p">,</span> <span class="ss">:git</span> <span class="o">=&gt;</span> <span class="s1">'https://github.com/codebasesaga/PinterestAuth/PinterestAuth.git'</span>
+</code></pre>
+
+<blockquote>
+<p>Note: Since <code>PinterestAuth</code> is not officially published on CocoaPods, we have to specify its location with the url.</p>
+</blockquote>
+
+<p>Then run the Install command in the CocoaPods app.</p>
+<h1 id='configuring-your-project' class='heading'>Configuring your project</h1>
+
+<p>In your <code>AppDelegate.swift</code>, <code>import PinterestAuth</code>. Then in your <code>AppDelegate</code>&lsquo;s <code>didFinishLaunching</code> method, configure <code><a href="Enums/Auth.html">Auth</a></code> with your Pinterest app&rsquo;s client id and client secret (available at <a href="https://developers.pinterest.com/apps/):">https://developers.pinterest.com/apps/):</a></p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">application</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="n">didFinishLaunchingWithOptions</span> <span class="nv">launchOptions</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationLaunchOptionsKey</span><span class="p">:</span> <span class="kt">Any</span><span class="p">]?)</span> <span class="o">-&gt;</span> <span class="nf">Bool</span> <span class="p">{</span>
+    <span class="kt">Auth</span><span class="o">.</span><span class="n">client_id</span> <span class="o">=</span> <span class="s">"YOUR_CLIENT_ID"</span>
+    <span class="kt">Auth</span><span class="o">.</span><span class="n">client_secret</span> <span class="o">=</span> <span class="s">"YOUR_CLIENT_SECRET"</span>
+
+    <span class="k">return</span> <span class="kc">true</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>You may now use <code><a href="Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">Auth.url</a></code> to redirect the user to Pinterest&rsquo;s login in Safari.</p>
+<h1 id='letting-the-user-log-in-to-pinterest-com' class='heading'>Letting the user log in to Pinterest.com</h1>
+
+<p>In order to allow the user to log in to Pinterest, we must send them to Pinterest.com in a web browser as part of the Oauth2 standard process. You can ensure the user authenticate&rsquo;s with Pinterest for your app by sending them to <code><a href="Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">Auth.url</a></code>:</p>
+<pre class="highlight swift"><code><span class="c1">//Open Pinterest login in Safari.app</span>
+<span class="kt">UIApplication</span><span class="o">.</span><span class="n">shared</span><span class="o">.</span><span class="nf">open</span><span class="p">(</span><span class="kt">Auth</span><span class="o">.</span><span class="n">url</span><span class="p">)</span>
+</code></pre>
+
+<p>When the user finishes signing in they will be redirected back to your app. In order to handle this, you must implement <code>AppDelegate</code>&rsquo;s <code>openUrl</code> method, and inside return <code>Auth.requestAccessToken(…)</code>:</p>
+<pre class="highlight swift"><code><span class="kd">func</span> <span class="nf">application</span><span class="p">(</span><span class="n">_</span> <span class="nv">app</span><span class="p">:</span> <span class="kt">UIApplication</span><span class="p">,</span> <span class="kd">open</span> <span class="nv">url</span><span class="p">:</span> <span class="kt">URL</span><span class="p">,</span> <span class="nv">options</span><span class="p">:</span> <span class="p">[</span><span class="kt">UIApplicationOpenURLOptionsKey</span> <span class="p">:</span> <span class="kt">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">[:])</span> <span class="o">-&gt;</span> <span class="nf">Bool</span> <span class="p">{</span>
+   <span class="k">return</span> <span class="kt">Auth</span><span class="o">.</span><span class="nf">requestAccessToken</span><span class="p">(</span><span class="nv">with</span><span class="p">:</span> <span class="n">url</span><span class="p">)</span> <span class="p">{</span> <span class="n">result</span> <span class="k">in</span>
+       <span class="k">switch</span> <span class="nf">result</span> <span class="p">{</span>
+       <span class="k">case</span> <span class="o">.</span><span class="nv">success</span><span class="p">:</span>
+           <span class="c1">//Token is available</span>
+       <span class="k">case</span> <span class="o">.</span><span class="nf">failure</span><span class="p">(</span><span class="k">let</span> <span class="nv">error</span><span class="p">):</span>
+           <span class="c1">//Handle the error</span>
+       <span class="p">}</span>
+   <span class="p">}</span>
+<span class="p">}</span>
+</code></pre>
+
+<p>This will request an access token for your app which will become available in <code><a href="Enums/Auth.html#/s:13PinterestAuth0B0O5tokenSSSgvpZ">Auth.token</a></code> upon success and may be used to make authenticated requests to the Pinterest API on behalf of the user.</p>
+<h1 id='checking-if-there-is-a-logged-in-user' class='heading'>Checking if there is a logged in user</h1>
+
+<p>Before making requests with <code><a href="Enums/Auth.html#/s:13PinterestAuth0B0O5tokenSSSgvpZ">Auth.token</a></code>, you should first verify that there is a token available:</p>
+<pre class="highlight swift"><code><span class="k">if</span> <span class="kt">Auth</span><span class="o">.</span><span class="nf">ed</span> <span class="p">{</span>
+  <span class="c1">//User is logged in and token is available.</span>
+<span class="p">}</span>
+</code></pre>
+
+          </section>
+        </section>
+        <section id="footer">
+          <p>&copy; 2018 <a class="link" href="" target="_blank" rel="external"></a>. All rights reserved. (Last updated: 2018-04-01)</p>
+          <p>Generated by <a class="link" href="https://github.com/realm/jazzy" target="_blank" rel="external">jazzy ♪♫ v0.9.1</a>, a <a class="link" href="http://realm.io" target="_blank" rel="external">Realm</a> project.</p>
+        </section>
+      </article>
+    </div>
+  </body>
+</div>
+</html>
