@@ -160,6 +160,12 @@ By default, this property is configured to request all privileges.</p>
                       <div class="abstract">
                         <p>The user&rsquo;s token used to make autenticated requests to Pinterest on behalf of the user.
 This property is nil if no user is currently logged in.</p>
+<div class="aside aside-note">
+    <p class="aside-title">Note</p>
+    The token is automatically stored to <code>UserDefaults</code> and thus will be immediately
+available on successive app launches.
+
+</div>
 
                       </div>
                       <div class="declaration">
@@ -339,10 +345,10 @@ Failure to do so is considered a programmer error and will result in a crash.
                       <div class="pointer"></div>
                       <div class="abstract">
                         <p>The method used to make the request for the logged in user&rsquo;s token after they have returned from Pinterest.com.
-You call this method from your <code>AppDelegate</code>&lsquo;s <code>openUrl</code> method, passing in the <code><a href="../Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">url</a></code>. This method checks the <code><a href="../Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">url</a></code>
+You call this method from your <code>AppDelegate</code>&lsquo;s <code>openUrl</code> method, passing in the url. This method checks the url
 to determine if it was intended for your app, returning <code>true</code> or <code>false</code> accordingly.</p>
 
-<p>If the <code><a href="../Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">url</a></code> is the expected redirect from Pinterest login, the request for the user&rsquo;s token is made and the provided
+<p>If the url is the expected redirect from Pinterest login, the request for the user&rsquo;s token is made and the provided
 <code>completion</code> is called with the result of the request, when finished. If the request is sucessful, <code><a href="../Enums/Auth.html#/s:13PinterestAuth0B0O5tokenSSSgvpZ">Auth.token</a></code> will become
 available for use in your app for authenticated requests.</p>
 
@@ -380,7 +386,7 @@ available for use in your app for authenticated requests.</p>
                               </td>
                               <td>
                                 <div>
-                                  <p>The <code><a href="../Enums/Auth.html#/s:13PinterestAuth0B0O3url10Foundation3URLVvpZ">url</a></code> passed into your <code>AppDelegate</code>&lsquo;s <code>openUrl</code> method.</p>
+                                  <p>The url passed into your <code>AppDelegate</code>&lsquo;s <code>openUrl</code> method.</p>
                                 </div>
                               </td>
                             </tr>

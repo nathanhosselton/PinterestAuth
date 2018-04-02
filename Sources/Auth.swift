@@ -16,6 +16,8 @@ public enum Auth {
 
     /// The user's token used to make autenticated requests to Pinterest on behalf of the user.
     /// This property is nil if no user is currently logged in.
+    /// - Note: The token is automatically stored to `UserDefaults` and thus will be immediately
+    /// available on successive app launches.
     public private(set) static var token: String? {
         get {
             return UserDefaults.standard.string(forKey: "token")
@@ -169,10 +171,10 @@ public enum Auth {
 
     /**
      The method used to make the request for the logged in user's token after they have returned from Pinterest.com.
-     You call this method from your `AppDelegate`'s `openUrl` method, passing in the `url`. This method checks the `url`
+     You call this method from your `AppDelegate`'s `openUrl` method, passing in the url. This method checks the url
      to determine if it was intended for your app, returning `true` or `false` accordingly.
 
-     If the `url` is the expected redirect from Pinterest login, the request for the user's token is made and the provided
+     If the url is the expected redirect from Pinterest login, the request for the user's token is made and the provided
      `completion` is called with the result of the request, when finished. If the request is sucessful, `Auth.token` will become
      available for use in your app for authenticated requests.
 
@@ -190,7 +192,7 @@ public enum Auth {
          }
 
      - Parameters:
-        - redirect: The `url` passed into your `AppDelegate`'s `openUrl` method.
+        - redirect: The url passed into your `AppDelegate`'s `openUrl` method.
         - completion: The completion handler for the token request.
         - result: The result of the token request passed into the `completion`.
      */
