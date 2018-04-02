@@ -1,6 +1,6 @@
 # PinterestAuth
 
-The complete documentation for the public APIs of the `PinterestAuth` framework which wraps Pinterest.com's Oauth2 authentication process.
+The complete [documentation](https://codebasesaga.github.io/PinterestAuth/index.html) for the public APIs of the `PinterestAuth` framework which wraps Pinterest.com's Oauth2 authentication process.
 
 # Getting Started
 
