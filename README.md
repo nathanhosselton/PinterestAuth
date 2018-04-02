@@ -16,7 +16,7 @@ Then run the Install command in the CocoaPods app.
 
 # Configuring your project
 
-In your `AppDelegate.swift`, `import PinterestAuth`. Then in your `AppDelegate`'s `didFinishLaunching` method, configure `Auth` with your Pinterest app's client id and client secret (available at https://developers.pinterest.com/apps/):
+In your AppDelegate.swift, `import PinterestAuth`. Then in your `AppDelegate`'s `didFinishLaunching` method, configure `Auth` with your Pinterest app's client id and client secret (available [here](https://developers.pinterest.com/apps/)):
 
 ```swift
 func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
@@ -26,6 +26,12 @@ func application(_ application: UIApplication, didFinishLaunchingWithOptions lau
     return true
 }
 ```
+
+In your project configuration, in the Info tab of your app target, add a URL Type with the scheme `pdkYOURCLIENTID` like so:
+
+![](https://raw.githubusercontent.com/codebasesaga/PinterestAuth/master/Resources/url_types.png)
+
+>FYI: This is the url scheme that Pinterest will use to redirect the user back to your app after they have logged in. Pinterest generates this scheme for your app automatically and it cannot be changed.
 
 You may now use `Auth.url` to redirect the user to Pinterest's login in Safari.
 
