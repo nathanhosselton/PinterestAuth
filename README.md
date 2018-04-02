@@ -7,7 +7,7 @@ The complete documentation for the public APIs of the `PinterestAuth` framework 
 Include the library in your `Podfile` like so:
 
 ```ruby
-pod 'PinterestAuth', :git => 'https://github.com/codebasesaga/PinterestAuth/PinterestAuth.git'
+pod 'PinterestAuth', :git => 'https://github.com/codebasesaga/PinterestAuth.git'
 ```
 
 >Note: Since `PinterestAuth` is not officially published on CocoaPods, we have to specify its location with the url.
