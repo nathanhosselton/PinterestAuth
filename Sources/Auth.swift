@@ -42,6 +42,13 @@ public enum Auth {
         return token != nil
     }
 
+    /// The result of the most recent access token request. This property is nil until
+    /// at least one request is completed.
+    ///
+    /// The value of this property is the same as what is provided in the completion of
+    /// `Auth.requestAccessToken(with:completion:)`. It is mirrored here for convenience.
+    public private(set) static var result: Result?
+
     private static var scheme: String? {
         guard let client = client_id, !client.isEmpty else { return nil }
         
@@ -261,14 +268,18 @@ public enum Auth {
                 if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any],
                     let token = json["access_token"] as? String {
                     self.token = token
-                    completion(.success)
+                    self.result = .success
+                    completion(self.result!)
                 } else {
-                    completion(.failure(error: Error.unexpectedResponse(resp, data, nil)))
+                    self.result = .failure(error: Error.unexpectedResponse(resp, data, nil))
+                    completion(self.result!)
                 }
             case (_, let resp, let .some(error)):
-                completion(.failure(error: Error.unexpectedResponse(resp, nil, error)))
+                self.result = .failure(error: Error.unexpectedResponse(resp, nil, error))
+                completion(self.result!)
             case (_, let resp, _):
-                completion(.failure(error: Error.unexpectedResponse(resp, nil, nil)))
+                self.result = .failure(error: Error.unexpectedResponse(resp, nil, nil))
+                completion(self.result!)
             }
         }
         .resume()
