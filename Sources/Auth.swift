@@ -208,26 +208,33 @@ public enum Auth {
         //This check depends on `client_id` being non-nil but that should never happen here.
         guard redirect.scheme == scheme else { return false }
 
+        let done: (Result) -> Void = { result in
+            DispatchQueue.main.async {
+                self.result = result
+                completion(result)
+            }
+        }
+
         //Verify the redirect containts the expected parameters else continue redirect but immediately complete with an error.
         guard let cc = URLComponents(url: redirect, resolvingAgainstBaseURL: false),
             let stateItem = cc.queryItems?.first(where: { $0.name == "state" }),
             let codeItem = cc.queryItems?.first(where: { $0.name == "code" }),
             let code = codeItem.value
             else {
-                completion(.failure(error: Error.unexpectedRedirect(redirect)))
+                done(.failure(error: Error.unexpectedRedirect(redirect)))
                 return true
             }
 
         //Verify the state of the redirect matches what was sent else continue the redirect but immediately complete with an error.
         guard stateItem.value == state else {
-            completion(.failure(error: Error.unexpectedState))
+            done(.failure(error: Error.unexpectedState))
             return true
         }
 
         //Verify the client_id and client_secret are still set else continue the redirect but immediately complete with an error.
         //This should be impossible, but if it isn't, this code will never execute currently as the scheme check above will also fail.
         guard let client = client_id, !client.isEmpty, let secret = client_secret, !secret.isEmpty else {
-            completion(.failure(error: Error.contextLost))
+            done(.failure(error: Error.contextLost))
             return true
         }
 
@@ -250,7 +257,7 @@ public enum Auth {
 
         //Verify the generated auth url is valid else continue the redirect but immediately complete with an error.
         guard let authUrl = url else {
-            completion(.failure(error: Error.unexpectedRedirect(redirect)))
+            done(.failure(error: Error.unexpectedRedirect(redirect)))
             return true
         }
 
@@ -267,19 +274,15 @@ public enum Auth {
             case (let .some(data), let resp, _):
                 if let json = (try? JSONSerialization.jsonObject(with: data, options: .allowFragments)) as? [String: Any],
                     let token = json["access_token"] as? String {
-                    self.token = token
-                    self.result = .success
-                    completion(self.result!)
+                    DispatchQueue.main.async { self.token = token }
+                    done(.success)
                 } else {
-                    self.result = .failure(error: Error.unexpectedResponse(resp, data, nil))
-                    completion(self.result!)
+                    done(.failure(error: Error.unexpectedResponse(resp, data, nil)))
                 }
             case (_, let resp, let .some(error)):
-                self.result = .failure(error: Error.unexpectedResponse(resp, nil, error))
-                completion(self.result!)
+                done(.failure(error: Error.unexpectedResponse(resp, nil, error)))
             case (_, let resp, _):
-                self.result = .failure(error: Error.unexpectedResponse(resp, nil, nil))
-                completion(self.result!)
+                done(.failure(error: Error.unexpectedResponse(resp, nil, nil)))
             }
         }
         .resume()
